@@ -1,0 +1,2 @@
+module kakuro {
+}
