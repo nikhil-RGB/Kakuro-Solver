@@ -3,9 +3,15 @@ import java.util.*;
 public final class UtilityMethods
 {
 public static String empH;
+//empH represents the standard empty grid box filler
 static 
 {
 empH="0";	
+}
+//main method only serves the purpose of testing
+public static void main(String[] args)
+{
+	
 }
 //Works both in theory and practically-TESTED WITH UNIT TESTER-0 should not be present
 public static ArrayList<Long> permute(int sum,int gboxes)
@@ -31,6 +37,8 @@ public static ArrayList<Long> permute(int sum,int gboxes)
 	}
 return arr;
 }
+//This method checks if the number inputted in the method has repeat digits,
+//and whether the String contains zero
 public static boolean isUnique(long num)
 {
 String numi=num+"";
@@ -46,6 +54,8 @@ if(numi.indexOf(ch)!=numi.lastIndexOf(ch))
 }
 return true;
 }
+
+//This method sums up a number passed to it as an argument
 public static int summate(long num)
 {
 int S=0;
@@ -72,7 +82,6 @@ public static ArrayList<Long> filter(ArrayList<Long> results,String constraint)
 		for(int k1=0;k1<res.length();++k1)
 		{
 			char ch1=res.charAt(k1);
-			
 			char ch2=constraint.charAt(k1);
 			
 			if(ch2!='0'&&ch2!=ch1)
@@ -83,11 +92,10 @@ public static ArrayList<Long> filter(ArrayList<Long> results,String constraint)
 		}
 		if(flag)
 		{
-			
+			//Adds res to fresh list
 			fresh.add(Long.parseLong(res));
 	    }
 	}
-	
 	return fresh;
 }
 }
