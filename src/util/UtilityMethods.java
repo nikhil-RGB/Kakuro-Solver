@@ -2,12 +2,7 @@ package util;
 import java.util.*;
 public final class UtilityMethods
 {
-public static String empH;
-//empH represents the standard empty grid box filler
-static 
-{
-empH="0";	
-}
+
 //main method only serves the purpose of testing
 public static void main(String[] args)
 {
@@ -98,4 +93,5 @@ public static ArrayList<Long> filter(ArrayList<Long> results,String constraint)
 	}
 	return fresh;
 }
+ 
 }
