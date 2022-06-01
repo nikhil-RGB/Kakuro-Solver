@@ -73,20 +73,36 @@ public final class KakuroBoard
     	//over here down-reading
     	LAB1:
     	for(int i=x+1;x<board.length;++i)
-    	{}
+    	{
+    		String text=this.board[i][y];
+    		if(!this.isFillable(text))
+    		{break LAB1;}
+    		toRet[1]+=text;
+    	}
     	 
     	return toRet;
     }
     //This method returns true if cell is a fill-able cell, false in all other cases
     public boolean isFillable(String th)
     {
-     if(th.trim().equals("0")) 
+     if(isPositiveNumber(th)) 
      {return true;}
      return false;
     }
-    public static boolean isNumber(String num)
+    //returns true if passed int is a number
+    public static boolean isPositiveNumber(String num)
     {
-      
+      try
+      {
+    	  int nn=Integer.parseInt(num);
+    	  if(nn<0)
+    	  {
+    		  throw new NumberFormatException();
+    	  }
+    	  return true;
+      }
+      catch(NumberFormatException ex)
+      {return false;}
     }
     
 }
