@@ -1,11 +1,13 @@
 package main;
+
+//NOTE: A board configuration is always "RIGHT_SUM DOWN_SUM"
 import java.util.*;
 public final class KakuroBoard 
 {
-	private static String[][] board;//This board consists of all kakuro combination cells
+	private static String[][] board;//This board consists of all kakuro combination cells.
 	public static final String BLANK="0";//This marks which cell has no digit in it.
-    public static final String BLOCK="-1";//This marks which cell should be marked as blocked
-    //Constructs a Kakuro Board of dimensions X*Y
+    public static final String BLOCK="-1";//This marks which cell should be marked as blocked.
+    //Constructs a Kakuro Board of dimensions X*Y:
     public KakuroBoard(int x,int y)
     {
     	board=new String[x][y];
@@ -58,10 +60,33 @@ public final class KakuroBoard
     //reads the digits, right and down at a specefic spot.
     public String[] readAt(int x,int y)
     {
-    	String cell=this.board[x][y];
-    	String[] toRet=new String[2];
-    	
+    	String[] toRet=new String[] {"",""};
+    	//first reading right
+    	LAB:
+    	for(int j=y+1;j<board[x].length;++j)
+    	{
+    	 String text=this.board[x][j];
+    	 if(!this.isFillable(text))
+    	 {break LAB;}
+    	 toRet[0]+=text;
+    	}
+    	//over here down-reading
+    	LAB1:
+    	for(int i=x+1;x<board.length;++i)
+    	{}
+    	 
     	return toRet;
+    }
+    //This method returns true if cell is a fill-able cell, false in all other cases
+    public boolean isFillable(String th)
+    {
+     if(th.trim().equals("0")) 
+     {return true;}
+     return false;
+    }
+    public static boolean isNumber(String num)
+    {
+      
     }
     
 }
