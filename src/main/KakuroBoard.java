@@ -59,7 +59,10 @@ public final class KakuroBoard
     }
     //reads the digits, right and down at a specefic spot.
     public String[] readAt(int x,int y)
-    {
+    {   
+    	String cell=this.board[x][y];
+    	if(this.isBlocked(x, y)||this.isFillable(cell))
+    	{return null;}
     	String[] toRet=new String[] {"",""};
     	//first reading right
     	LAB:
@@ -89,6 +92,14 @@ public final class KakuroBoard
      {return true;}
      return false;
     }
+   //This method fills in a value at a specefic index
+    public void fill(String value,int x,int y)
+    {   
+    	int val=Integer.parseInt(value);
+    	if(val<0)
+    	{throw new IllegalArgumentException("Invalid Argument");}
+    	this.board[x][y]=value;
+    }
     //returns true if passed int is a number
     public static boolean isPositiveNumber(String num)
     {
@@ -103,6 +114,36 @@ public final class KakuroBoard
       }
       catch(NumberFormatException ex)
       {return false;}
+    }
+    //This method checks to see if a particular block is blocked
+    public boolean isBlocked(int x,int y)
+    {
+    	String cell=this.board[x][y];
+    	if(cell.equals("-1"))
+    	{return true;}
+      return false;	
+    }
+    //main method only for testing purposes- testing
+    public static void main(String[] args)
+    {
+    	String[][] table=KakuroBoard.createFilledTable("0",5,3);
+        KakuroBoard kb=new KakuroBoard(table);
+        kb.block(0, 0);
+        kb.insertAt(0, 23, 0, 1);
+        kb.insertAt(0,30,0,2);
+        kb.printBoard();
+    }
+    //This method can be used for printing all values in the board, i.e. testing
+    public void printBoard()
+    {
+    	for(int i=0;i<this.board.length;++i)
+    	{
+    		for(int j=0;j<this.board[i].length;++j)
+    		{
+    			System.out.print(board[i][j]+" ");
+    		}
+    		System.out.println();
+    	}
     }
     
 }
