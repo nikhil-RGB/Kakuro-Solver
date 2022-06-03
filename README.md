@@ -75,7 +75,7 @@ return sorted;
 ```
 <br>
 Now we may use the <a href="https://github.com/nikhil-RGB/sudoku/blob/main/README.md">sudoku solver</a> technique to mix and match solutions till we get the correct solution configuration.
-
+This is a desktop application,built in JAVA AWT/SWING
 
 
 
