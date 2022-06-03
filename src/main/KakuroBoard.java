@@ -75,7 +75,7 @@ public final class KakuroBoard
     	}
     	//over here down-reading
     	LAB1:
-    	for(int i=x+1;x<board.length;++i)
+    	for(int i=x+1;i<board.length;++i)
     	{
     		String text=this.board[i][y];
     		if(!this.isFillable(text))
@@ -129,9 +129,17 @@ public final class KakuroBoard
     	String[][] table=KakuroBoard.createFilledTable("0",5,3);
         KakuroBoard kb=new KakuroBoard(table);
         kb.block(0, 0);
-        kb.insertAt(0, 23, 0, 1);
+        kb.insertAt(0,23,0,1);
         kb.insertAt(0,30,0,2);
+        kb.fill("9",1,1);
+        kb.fill("2",2,1);
         kb.printBoard();
+        String[] results=kb.readAt(1, 1);
+        
+        	System.out.println("Right: "+results[0]);
+        	System.out.println("Down: "+results[1]);
+        	
+        
     }
     //This method can be used for printing all values in the board, i.e. testing
     public void printBoard()
