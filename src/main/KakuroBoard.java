@@ -2,6 +2,8 @@ package main;
 
 //NOTE: A board configuration is always "RIGHT_SUM DOWN_SUM"
 import java.util.*;
+
+import util.UtilityMethods;
 public final class KakuroBoard 
 {
 	private static String[][] board;//This board consists of all kakuro combination cells.
@@ -152,6 +154,48 @@ public final class KakuroBoard
     		}
     		System.out.println();
     	}
+    }
+    //This method fills in a solution for a particular grid box, and creates clones for every possible solution
+    public ArrayList<KakuroBoard> stepSolve(int x,int y)
+    {
+    //No exception checking here- erroneous parameter input WILL cause an InexOutOfBoundsException
+     String[] cell_adjs=this.readAt(x, y);
+     if(cell_adjs==null)
+     {return null;}
+     String cell=this.board[x][y];
+     Scanner reader =new Scanner(cell);
+     String right=reader.next();
+     String down=reader.next();
+     reader.close();
+     ArrayList<Long> right_sols=UtilityMethods.permute(Integer.parseInt(right), cell_adjs[0].length());
+     right_sols=UtilityMethods.filter(right_sols, right);
+     ArrayList<Long> down_sols=UtilityMethods.permute(Integer.parseInt(down),cell_adjs[1].length());
+     ArrayList<Long> first=(right_sols.size()>0)?right_sols:down_sols;
+     ArrayList<Long> second=(first==right_sols)?down_sols:right_sols;
+     for(int i=0;i<first.size();++i)
+     {
+       	 //fill solution in at specified location
+     }
+    	
+    }
+    
+    //This method fills in the solution at specified grid box-can throw exception for erroneous parameters
+    public void fillSolution(String solution,int x,int y,String orient)
+    {
+      if(orient.equals("RIGHT"))
+      {
+    	  for(int i=y+1,ch=0;ch<solution.length();++i,++ch)
+    	  {
+    		  this.fill(solution.charAt(ch)+"",x,i);
+    	  }
+      }
+      else //downwards orientation
+      {
+    	  for(int i=x+1,ch=0;ch<solution.length();++i)
+    	  {
+    		  
+    	  }
+      }
     }
     
 }
