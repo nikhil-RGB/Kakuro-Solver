@@ -1,15 +1,19 @@
 package main;
-
+import java.awt.Point;
 //NOTE: A board configuration is always "RIGHT_SUM DOWN_SUM"
 import java.util.*;
 
 import util.UtilityMethods;
 public final class KakuroBoard 
 {
-	private static String[][] board;//This board consists of all kakuro combination cells.
+	private java.awt.Point checkpoint;
+	private  String[][] board;//This board consists of all kakuro combination cells.
 	public static final String BLANK="0";//This marks which cell has no digit in it.
     public static final String BLOCK="-1";//This marks which cell should be marked as blocked.
     //Constructs a Kakuro Board of dimensions X*Y:
+    {
+    	this.checkpoint=new Point(0,0);
+    }
     public KakuroBoard(int x,int y)
     {
     	board=new String[x][y];
@@ -133,14 +137,15 @@ public final class KakuroBoard
         kb.block(0, 0);
         kb.insertAt(0,23,0,1);
         kb.insertAt(0,30,0,2);
-        kb.fill("9",1,1);
-        kb.fill("2",2,1);
+        //kb.fill("9",1,1);
+        //kb.fill("2",2,1);
         kb.printBoard();
-        String[] results=kb.readAt(1, 1);
+        //String[] results=kb.readAt(1, 1);
         
-        	System.out.println("Right: "+results[0]);
-        	System.out.println("Down: "+results[1]);
-        	
+        	//System.out.println("Right: "+results[0]);
+        	//System.out.println("Down: "+results[1]);
+       KakuroBoard finals=kb.solveProcessStandard();
+       finals.printBoard();
         
     }
     //This method can be used for printing all values in the board, i.e. testing
@@ -156,10 +161,12 @@ public final class KakuroBoard
     	}
     }
     //This method fills in a solution for a particular grid box, and creates clones for every possible solution
+    //Calling this multiple m*n times, where m and n are the dimensions of the board.
     public ArrayList<KakuroBoard> stepSolve(int x,int y)
     {
-    //No exception checking here- erroneous parameter input WILL cause an InexOutOfBoundsException
+    //No exception checking here- erroneous parameter input WILL cause an IndexOutOfBoundsException
      String[] cell_adjs=this.readAt(x, y);
+     this.checkpoint=new Point(x,y);
      if(cell_adjs==null)
      {return null;}
      String cell=this.board[x][y];
@@ -170,14 +177,40 @@ public final class KakuroBoard
      ArrayList<Long> right_sols=UtilityMethods.permute(Integer.parseInt(right), cell_adjs[0].length());
      right_sols=UtilityMethods.filter(right_sols, right);
      ArrayList<Long> down_sols=UtilityMethods.permute(Integer.parseInt(down),cell_adjs[1].length());
-     ArrayList<Long> first=(right_sols.size()>0)?right_sols:down_sols;
-     ArrayList<Long> second=(first==right_sols)?down_sols:right_sols;
-     for(int i=0;i<first.size();++i)
+     down_sols=UtilityMethods.filter(down_sols, down);
+     
+     //ArrayList<Long> first=(right_sols.size()>0)?right_sols:down_sols;
+     //boolean flag=(first==right_sols)?true:false;//true if first selected solution is the right-oriented String solution, 
+     //false if it is a downward-oriented String solution
+     // ArrayList<Long> second=(first==right_sols)?down_sols:right_sols;//second config to be filled in
+     ArrayList<KakuroBoard> finals=new ArrayList<>(0);
+     for(int i=0;i<right_sols.size();++i)
      {
+    	 String current=right_sols.get(i).toString();
+    	 KakuroBoard kb=this.clone();
+    	 kb.fillSolution(current, x, y,"RIGHT");
+    	 finals.add(kb);
        	 //fill solution in at specified location
      }
-    	
-    }
+     if(finals.size()==0)
+     {
+    	 finals.add(this.clone());
+     }
+     ArrayList<KakuroBoard> final2=new ArrayList<>(0);
+     for(int i=0;i<finals.size();++i)
+     {
+    	 KakuroBoard toView=finals.get(i);
+    	 for(int j=0;j<down_sols.size();++j)
+    	 {
+    		 KakuroBoard toOperate=toView.clone();
+    		 String soln=down_sols.get(j).toString();
+    		 toOperate.fillSolution(soln, x, y,"DOWN");
+    		 final2.add(toOperate);
+    	 }
+     }
+     finals.clear();
+     return final2;     
+}
     
     //This method fills in the solution at specified grid box-can throw exception for erroneous parameters
     public void fillSolution(String solution,int x,int y,String orient)
@@ -191,11 +224,68 @@ public final class KakuroBoard
       }
       else //downwards orientation
       {
-    	  for(int i=x+1,ch=0;ch<solution.length();++i)
+    	  for(int i=x+1,ch=0;ch<solution.length();++i,++ch)
     	  {
-    		  
+    		  this.fill(solution.charAt(ch)+"",i, y);
     	  }
       }
     }
-    
+    @Override()
+    public KakuroBoard clone()
+    {
+    	KakuroBoard kb=new KakuroBoard(cloneDDA(this.board));
+    	return kb;
+    }
+    public static String[][] cloneDDA(String[][] table)
+    {
+    	String[][] DDA=new String[table.length][table[0].length];
+    	for(int i=0;i<DDA.length;++i)
+    	{
+    		for(int j=0;j<DDA[i].length;++j)
+    		{
+    			DDA[i][j]=table[i][j];
+    		}
+    	}
+    	return DDA;
+    }
+    public KakuroBoard solveProcessStandard()
+    {
+    	int x=0;
+    	int y=0;
+    	ArrayList<KakuroBoard> kbs=new ArrayList<>(0);
+    	kbs.add(this);
+    	SOLVER:
+    	while(kbs.size()!=0&&(!kbs.get(0).isSolved()))
+    	{
+    		//Kakuro board step-by-step solving
+    		KakuroBoard current=kbs.get(0);
+    		ArrayList<KakuroBoard> kb=current.stepSolve(x,y);
+    		if(kb!=null)
+    		{
+    		kbs.addAll(kb);
+    		if(kbs.size()==1)
+    		{break SOLVER;}
+    		kbs.remove(0);
+    		}
+    		x++;
+    		y++;
+    		if(x>(board.length-1))
+    		{
+    			x=0;
+    		}
+    		if(y>(board[0].length-1))
+    		{
+    			y=0;
+    		}
+    	}
+    	return kbs.get(0);
+    }
+    //This method checks if the board has been solved
+    public boolean isSolved()
+    {
+    	if(((this.checkpoint.x==(this.board.length-1)))&&(this.checkpoint.y==(this.board[0].length-1)))
+    	{return true;}	
+    	return false;	
+    }
+
 }
