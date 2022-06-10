@@ -2,6 +2,9 @@ package main;
 import java.awt.Point;
 //NOTE: A board configuration is always "RIGHT_SUM DOWN_SUM"
 import java.util.*;
+//TESTED marks a function as something which runs correctly after testing
+//UNTESTED marks a function as untested
+//INCORRECT marks a function as outputting incorrect values
 import util.UtilityMethods;
 public final class KakuroBoard 
 {
@@ -144,8 +147,12 @@ public final class KakuroBoard
         
         	//System.out.println("Right: "+results[0]);
         	//System.out.println("Down: "+results[1]);
-       KakuroBoard finals=kb.solveProcessStandard();
-       finals.printBoard();
+     //  ArrayList<KakuroBoard> finals=kb.stepSolve(0, 1);
+     //  for(KakuroBoard fin:finals)
+      // {fin.printBoard();}
+      // System.out.println(finals.size());
+        KakuroBoard solved=kb.solveProcessStandard();
+        solved.printBoard();
         
     }
     //This method can be used for printing all values in the board, i.e. testing
@@ -162,22 +169,40 @@ public final class KakuroBoard
     }
     //This method fills in a solution for a particular grid box, and creates clones for every possible solution
     //Calling this multiple m*n times, where m and n are the dimensions of the board.
+    //Step solve was bugged because an incorrect variable was being passed as a constraint to the filter function.
     public ArrayList<KakuroBoard> stepSolve(int x,int y)
     {
     //No exception checking here- erroneous parameter input WILL cause an IndexOutOfBoundsException
-     String[] cell_adjs=this.readAt(x, y);
+     String[] cell_adjs=this.readAt(x,y); 
      this.checkpoint=new Point(x,y);
      if(cell_adjs==null)
      {return null;}
      String cell=this.board[x][y];
      Scanner reader =new Scanner(cell);
      String right=reader.next();
+     
+     System.out.println("Right is"+right);
+     System.out.println("Right numbers is: "+cell_adjs[0]);
+     
      String down=reader.next();
+     
+     System.out.println("Down is "+down);
+     System.out.println("Down numbers are: "+cell_adjs[1]);
+     
      reader.close();
      ArrayList<Long> right_sols=UtilityMethods.permute(Integer.parseInt(right), cell_adjs[0].length());
-     right_sols=UtilityMethods.filter(right_sols, right);
+     right_sols=UtilityMethods.filter(right_sols, cell_adjs[0]);
      ArrayList<Long> down_sols=UtilityMethods.permute(Integer.parseInt(down),cell_adjs[1].length());
-     down_sols=UtilityMethods.filter(down_sols, down);
+     down_sols=UtilityMethods.filter(down_sols, cell_adjs[1]);
+     
+     System.out.println("Right solutions");
+     //right solutions
+     for(Long soln:right_sols)
+     {System.out.println(soln);}
+     //down solutions
+     System.out.println("Down solutions");
+     for(Long soln:down_sols)
+     {System.out.println(soln);}
      
      //ArrayList<Long> first=(right_sols.size()>0)?right_sols:down_sols;
      //boolean flag=(first==right_sols)?true:false;//true if first selected solution is the right-oriented String solution, 
@@ -289,6 +314,15 @@ public final class KakuroBoard
     	if(((this.checkpoint.x==(this.board.length-1)))&&(this.checkpoint.y==(this.board[0].length-1)))
     	{return true;}	
     	return false;	
+    }
+    //This method prints an Object SDA
+    public void printSDA(String[] sda)
+    {
+    	for(String ss:sda)
+    	{
+    		System.out.print(ss+ " ");
+    	}
+    	System.out.println();
     }
 
 }
