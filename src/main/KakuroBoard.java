@@ -2,7 +2,6 @@ package main;
 import java.awt.Point;
 //NOTE: A board configuration is always "RIGHT_SUM DOWN_SUM"
 import java.util.*;
-
 import util.UtilityMethods;
 public final class KakuroBoard 
 {
