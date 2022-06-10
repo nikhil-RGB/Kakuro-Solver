@@ -98,15 +98,16 @@ public final class KakuroBoard
      {return true;}
      return false;
     }
-   //This method fills in a value at a specefic index
-    public void fill(String value,int x,int y)
-    {   
-    	int val=Integer.parseInt(value);
-    	if(val<0)
-    	{throw new IllegalArgumentException("Invalid Argument");}
-    	this.board[x][y]=value;
-    }
-    //returns true if passed int is a number
+ 
+    //This method fills in a value at a specefic index
+	public void fill(String value,int x,int y)
+	{   
+		int val=Integer.parseInt(value);
+		if(val<0)
+		{throw new IllegalArgumentException("Invalid Argument");}
+		this.board[x][y]=value;
+	}
+	//returns true if passed int is a number
     public static boolean isPositiveNumber(String num)
     {
       try
@@ -183,6 +184,8 @@ public final class KakuroBoard
      //boolean flag=(first==right_sols)?true:false;//true if first selected solution is the right-oriented String solution, 
      //false if it is a downward-oriented String solution
      // ArrayList<Long> second=(first==right_sols)?down_sols:right_sols;//second config to be filled in
+     //commented out lines are unrequired.
+     
      ArrayList<KakuroBoard> finals=new ArrayList<>(0);
      for(int i=0;i<right_sols.size();++i)
      {
@@ -262,6 +265,7 @@ public final class KakuroBoard
     		ArrayList<KakuroBoard> kb=current.stepSolve(x,y);
     		if(kb!=null)
     		{
+    		System.out.println("Size= "+kb.size()+" x is "+x+" y is "+y);
     		kbs.addAll(kb);
     		if(kbs.size()==1)
     		{break SOLVER;}
