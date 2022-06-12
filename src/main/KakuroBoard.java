@@ -8,7 +8,7 @@ import java.util.*;
 import util.UtilityMethods;
 public final class KakuroBoard 
 {
-	private java.awt.Point checkpoint;
+	private java.awt.Point checkpoint; //Current solve point in the board
 	private  String[][] board;//This board consists of all kakuro combination cells.
 	public static final String BLANK="0";//This marks which cell has no digit in it.
     public static final String BLOCK="-1";//This marks which cell should be marked as blocked.
@@ -176,7 +176,7 @@ public final class KakuroBoard
      String[] cell_adjs=this.readAt(x,y); 
      this.checkpoint=new Point(x,y);
      if(cell_adjs==null)
-     {return null;}
+      {return null;}
      String cell=this.board[x][y];
      Scanner reader =new Scanner(cell);
      String right=reader.next();
@@ -197,12 +197,12 @@ public final class KakuroBoard
      
      System.out.println("Right solutions");
      //right solutions
-     for(Long soln:right_sols)
-     {System.out.println(soln);}
+    // for(Long soln:right_sols)
+     //{System.out.println(soln);}
      //down solutions
-     System.out.println("Down solutions");
-     for(Long soln:down_sols)
-     {System.out.println(soln);}
+     //System.out.println("Down solutions");
+     //for(Long soln:down_sols)
+     //{System.out.println(soln);}
      
      //ArrayList<Long> first=(right_sols.size()>0)?right_sols:down_sols;
      //boolean flag=(first==right_sols)?true:false;//true if first selected solution is the right-oriented String solution, 
@@ -236,6 +236,12 @@ public final class KakuroBoard
     	 }
      }
      finals.clear();
+     
+     for(KakuroBoard solve:final2)
+     {
+    	 solve.printBoard();
+     }
+     
      return final2;     
 }
     
@@ -275,6 +281,7 @@ public final class KakuroBoard
     	}
     	return DDA;
     }
+    
     public KakuroBoard solveProcessStandard()
     {
     	int x=0;
@@ -286,6 +293,7 @@ public final class KakuroBoard
     	{
     		//Kakuro board step-by-step solving
     		KakuroBoard current=kbs.get(0);
+    		System.out.println("Step solve request values: x is "+x+"y is "+y);
     		ArrayList<KakuroBoard> kb=current.stepSolve(x,y);
     		if(kb!=null)
     		{
@@ -295,18 +303,20 @@ public final class KakuroBoard
     		{break SOLVER;}
     		kbs.remove(0);
     		}
-    		x++;
     		y++;
-    		if(x>(board.length-1))
-    		{
-    			x=0;
-    		}
     		if(y>(board[0].length-1))
     		{
     			y=0;
+    			++x;
+    			if(x>(board.length-1))
+    			{
+    			 break SOLVER;
+    			}
     		}
+    		this.checkpoint=new Point(x,y);
     	}
-    	return kbs.get(0);
+    	System.out.println("Final size= "+kbs.size());
+    	return kbs.get(kbs.size()-1);
     }
     //This method checks if the board has been solved
     public boolean isSolved()
