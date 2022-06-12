@@ -8,6 +8,11 @@ import java.util.*;
 import util.UtilityMethods;
 public final class KakuroBoard 
 {
+	public static String[][] test_table1= {
+			{"-1","0 15","0 21","0 13","0 15","0 30","-1"},{"34 0","0","0","0","0","0","0 35"},{"39 0","0","0","0","0","0","0"},
+			{"4 0","0","0","-1","8 0","0","0"},{"7 0","0","0","0 13","9 9","0","0"},{"35 0","0","0","0","0","0","0"},
+			{"-1","15 0","0","0","0","0","0"}
+	};
 	private java.awt.Point checkpoint; //Current solve point in the board
 	private  String[][] board;//This board consists of all kakuro combination cells.
 	public static final String BLANK="0";//This marks which cell has no digit in it.
@@ -135,11 +140,11 @@ public final class KakuroBoard
     //main method only for testing purposes- testing
     public static void main(String[] args)
     {
-    	String[][] table=KakuroBoard.createFilledTable("0",5,3);
-        KakuroBoard kb=new KakuroBoard(table);
-        kb.block(0, 0);
-        kb.insertAt(0,23,0,1);
-        kb.insertAt(0,30,0,2);
+    	//String[][] table=KakuroBoard.createFilledTable("0",5,3);
+        KakuroBoard kb=new KakuroBoard(KakuroBoard.test_table1);
+        //kb.block(0, 0);
+        //kb.insertAt(0,23,0,1);
+       // kb.insertAt(0,30,0,2);
         //kb.fill("9",1,1);
         //kb.fill("2",2,1);
         kb.printBoard();
