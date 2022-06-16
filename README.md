@@ -1,4 +1,6 @@
 # Kakuro-Solver
+   --This repository is under development, not yet ready for use--
+  
 This repository contains code for a standard issue kakuro-board solver.<br>
 This project is currently heavy in development, and is not yet ready for viewing or deployment.<br>
 The "main" branch has stable, tested code for the project, check the "development-branch" for code which hasn't yet<br>
