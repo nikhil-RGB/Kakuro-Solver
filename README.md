@@ -1,6 +1,7 @@
 # Kakuro-Solver
    
 Code includes only the code for the solver, no UI code is included.
+Currently, the program will return a vast set of solutions, out of which one will be correct and complete.
   
 This repository contains code for a standard issue kakuro-board solver.<br>
 This project is currently heavy in development, and is not yet ready for viewing or deployment.<br>
