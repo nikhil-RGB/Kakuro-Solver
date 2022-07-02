@@ -13,10 +13,15 @@ public final class KakuroBoard
 			{"4 0","0","0","-1","8 0","0","0"},{"7 0","0","0","0 13","9 9","0","0"},{"35 0","0","0","0","0","0","0"},
 			{"-1","15 0","0","0","0","0","0"}
 	};
+	public static String[][] solving_table;//This is the board the solver will attempt to solve
 	private java.awt.Point checkpoint; //Current solve point in the board
 	private  String[][] board;//This board consists of all kakuro combination cells.
 	public static final String BLANK="0";//This marks which cell has no digit in it.
     public static final String BLOCK="-1";//This marks which cell should be marked as blocked.
+    public static void setInput(String[][] table)
+    {
+    	KakuroBoard.solving_table=table;
+    }
     //Constructs a Kakuro Board of dimensions X*Y:
     {
     	this.checkpoint=new Point(0,0);
@@ -137,19 +142,21 @@ public final class KakuroBoard
     	{return true;}
       return false;	
     }
-    //main method only for testing purposes- testing
+    //main method for solving the board-call the setInput to set the board for solving before calling this method.
     public static void main(String[] args)
     {
-    	String[][] table=KakuroBoard.createFilledTable("0",5,3);
+    	//String[][] table=KakuroBoard.createFilledTable("0",5,3);
+    	String[][] table=KakuroBoard.solving_table;
+    	
     	KakuroBoard kb=new KakuroBoard(table);
        // KakuroBoard kb=new KakuroBoard(KakuroBoard.test_table1);
-        kb.block(0, 0);
-        kb.insertAt(0,23,0,1);
-        kb.insertAt(0,30,0,2);
-        kb.fill("9",1,1);
-        kb.fill("2",2,1);
-        kb.printBoard();
-        //String[] results=kb.readAt(1, 1);
+       // kb.block(0, 0);
+       // kb.insertAt(0,23,0,1);
+       //kb.insertAt(0,30,0,2);
+       //kb.fill("9",1,1);
+       //kb.fill("2",2,1);
+       kb.printBoard();
+       //String[] results=kb.readAt(1, 1);
         
         	//System.out.println("Right: "+results[0]);
         	//System.out.println("Down: "+results[1]);
@@ -159,8 +166,7 @@ public final class KakuroBoard
       // System.out.println(finals.size());
         KakuroBoard solved=kb.solveProcessStandard();
         solved.printBoard();
-        
-    }
+     }
     //This method can be used for printing all values in the board, i.e. testing
     public void printBoard()
     {
