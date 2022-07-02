@@ -187,13 +187,13 @@ public final class KakuroBoard
      Scanner reader =new Scanner(cell);
      String right=reader.next();
      
-     System.out.println("Right is"+right);
-     System.out.println("Right numbers is: "+cell_adjs[0]);
+    // System.out.println("Right is"+right);
+    // System.out.println("Right numbers is: "+cell_adjs[0]);
      
      String down=reader.next();
      
-     System.out.println("Down is "+down);
-     System.out.println("Down numbers are: "+cell_adjs[1]);
+    // System.out.println("Down is "+down);
+     //System.out.println("Down numbers are: "+cell_adjs[1]);
      
      reader.close();
      ArrayList<Long> right_sols=UtilityMethods.permute(Integer.parseInt(right), cell_adjs[0].length());
@@ -201,7 +201,7 @@ public final class KakuroBoard
      ArrayList<Long> down_sols=UtilityMethods.permute(Integer.parseInt(down),cell_adjs[1].length());
      down_sols=UtilityMethods.filter(down_sols, cell_adjs[1]);
      
-     System.out.println("Right solutions");
+    // System.out.println("Right solutions");
      //right solutions
     // for(Long soln:right_sols)
      //{System.out.println(soln);}
@@ -243,10 +243,10 @@ public final class KakuroBoard
      }
      finals.clear();
      
-     for(KakuroBoard solve:final2)
-     {
-    	 solve.printBoard();
-     }
+     //for(KakuroBoard solve:final2)
+     //{
+    //	solve.printBoard();
+     //}
      
      return final2;     
 }
@@ -299,11 +299,11 @@ public final class KakuroBoard
     	{
     		//Kakuro board step-by-step solving
     		KakuroBoard current=kbs.get(0);
-    		System.out.println("Step solve request values: x is "+x+"y is "+y);
+    		//System.out.println("Step solve request values: x is "+x+"y is "+y);
     		ArrayList<KakuroBoard> kb=current.stepSolve(x,y);
     		if(kb!=null)
     		{
-    		System.out.println("Size= "+kb.size()+" x is "+x+" y is "+y);
+    		//System.out.println("Size= "+kb.size()+" x is "+x+" y is "+y);
     		kbs.addAll(kb);
     		if(kbs.size()==1)
     		{break SOLVER;}
@@ -321,7 +321,7 @@ public final class KakuroBoard
     		}
     		this.checkpoint=new Point(x,y);
     	}
-    	System.out.println("Final size= "+kbs.size());
+    	//System.out.println("Final size= "+kbs.size());
     	return kbs.get(kbs.size()-1);
     }
     //This method checks if the board has been solved
