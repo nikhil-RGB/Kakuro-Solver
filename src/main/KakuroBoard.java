@@ -140,13 +140,14 @@ public final class KakuroBoard
     //main method only for testing purposes- testing
     public static void main(String[] args)
     {
-    	//String[][] table=KakuroBoard.createFilledTable("0",5,3);
-        KakuroBoard kb=new KakuroBoard(KakuroBoard.test_table1);
-        //kb.block(0, 0);
-        //kb.insertAt(0,23,0,1);
-       // kb.insertAt(0,30,0,2);
-        //kb.fill("9",1,1);
-        //kb.fill("2",2,1);
+    	String[][] table=KakuroBoard.createFilledTable("0",5,3);
+    	KakuroBoard kb=new KakuroBoard(table);
+       // KakuroBoard kb=new KakuroBoard(KakuroBoard.test_table1);
+        kb.block(0, 0);
+        kb.insertAt(0,23,0,1);
+        kb.insertAt(0,30,0,2);
+        kb.fill("9",1,1);
+        kb.fill("2",2,1);
         kb.printBoard();
         //String[] results=kb.readAt(1, 1);
         
