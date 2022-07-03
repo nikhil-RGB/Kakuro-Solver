@@ -1,5 +1,7 @@
 # Kakuro-Solver
-   
+
+## Note: This Solver is Beta, and has inconsistencies in solving.
+
 Code includes only the code for the solver, no UI code is included.
 Currently, the program will return a vast set of solutions, out of which one will be correct and complete.
   
@@ -80,6 +82,15 @@ return sorted;
 <br>
 Now we may use the <a href="https://github.com/nikhil-RGB/sudoku/blob/main/README.md">sudoku solver</a> technique to mix and match solutions till we get the correct solution configuration.
 This is a desktop application,built in JAVA AWT/SWING
+
+### How to run:
+
+- Download all the source files
+- Open the Tester.java file and edit the main(String[] args) code:
+  * Create a String[][] kakuro table where "-1" at any index means "cell blocked", "0" means empty and "X Y" means X sum right and Y sum down, "N" means N filled at a
+    given location
+  * Next, assign this table for solving by calling KakuroBoard.setInput(String[][] table)
+  * Now call the main method of KakuroBoard, output will be generated.
 
 
 
